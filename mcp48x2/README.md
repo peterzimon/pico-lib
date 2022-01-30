@@ -17,21 +17,21 @@ datasheet for more info. Below is an example pinout that you can use with
 this driver:
 
 ```
-   |-------------------------------------------------------|
-   | SPI Controller: spi0                                  |
-   |-------------------------------------------------------|
-   | Pico        | Pico pin    | MCP48x2     | MCP48x2 pin |
-   |-------------|-------------|-------------|-------------|
-   | SCK         | 4 (GP2)     | SCK         | 3           |
-   | TX          | 5 (GP3)     | SDI         | 4           |
-   | RX          | 6 (GP4)     | N/A         | -           |
-   | Csn         | any GPIO    | ~CS         | 2           |
-   |-------------------------------------------------------|
+|-------------------------------------------------------|
+| SPI Controller: spi0                                  |
+|-------------------------------------------------------|
+| Pico        | Pico GP#    | MCP48x2     | MCP48x2 pin |
+|-------------|-------------|-------------|-------------|
+| SCK         | 2 (pin 4)   | SCK         | 3           |
+| TX          | 3 (pin 5)   | SDI         | 4           |
+| RX          | 4 (pin 6)   | N/A         | -           |
+| Csn         | any GPIO    | ~CS         | 2           |
+|-------------------------------------------------------|
 ```
 
 N/A – Not available (these DACs have only inputs)
-CS (chip select) is active low, you can use any GPIO pin for it. Pin #7 
-(GP5) is officially called CSn on the Pico so you might wanna use that.
+CS (chip select) is active low, you can use any GPIO pin for it. GP5
+(pin 7) is officially called CSn on the Pico so you might wanna use that.
 
 2. Include driver in your project and create an mcp48x2 object:
 

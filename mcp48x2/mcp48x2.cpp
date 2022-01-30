@@ -10,16 +10,15 @@ void MCP48X2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_
 
     config(dacA, x2, 1);
 
-    // MCP48X2 max frequecy is 20MHz, let's use 16MHz
-    spi_init(m_spi_port, 16 * 1000 * 1000);
+    // Let's use 1MHz
+    spi_init(m_spi_port, 1000 * 1000);
     gpio_set_function(pin_sck, GPIO_FUNC_SPI);
     gpio_set_function(pin_tx, GPIO_FUNC_SPI);
 
-
     // Set chip select high by default
     gpio_init(m_pin_cs);
-    gpio_set_dir(pin_cs, GPIO_OUT);
-    gpio_put(pin_cs, 1);
+    gpio_set_dir(m_pin_cs, GPIO_OUT);
+    gpio_put(m_pin_cs, 1);
 }
 
 /**
@@ -30,7 +29,7 @@ void MCP48X2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_
  * @param active Sets chip active (1 | 0)
  */
 void MCP48X2::config(MCP48X2_Channel channel, MCP48X2_Gain gain, bool active) {
-    m_config = channel << 3 | 0 | gain << 1 | active;
+    m_config = channel << 3 | 0 << 2 | gain << 1 | active;
 }
 
 /**
@@ -68,11 +67,11 @@ void MCP48X2::set_active(bool active) {
 void MCP48X2::write(uint16_t value) {
     uint8_t data[2];
 
-    // Get lo-byte
-    data[0] = value & 0xff;
-
     // Get hi-byte
-    data[1] = m_config << 4 | (value & 0xf00) >> 8;
+    data[0] = m_config << 4 | (value & 0xf00) >> 8;
+
+    // Get lo-byte
+    data[1] = value & 0xff;
 
     // Transmit the data
     m_cs_select();
