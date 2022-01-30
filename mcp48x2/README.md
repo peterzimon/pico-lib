@@ -37,7 +37,7 @@ CS (chip select) is active low, you can use any GPIO pin for it. GP5
 
 ```
 #include <mcp48x2.h>
-MCP48X2 dac;
+mcp48x2 dac;
 ```
 
 3. Initailize the DAC matching the way you set your pins up:
