@@ -7,8 +7,6 @@ if (NOT EXISTS $ENV{PICO_SDK_PATH})
     message(FATAL_ERROR "Pico SDK Path not found, please set correct environment variable PICO_SDK_PATH")
 endif ()
 
-enable_language(CXX ASM)
-
 include($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
 pico_sdk_init()
 
