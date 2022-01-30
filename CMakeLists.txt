@@ -14,5 +14,6 @@ pico_sdk_init()
 enable_language(C CXX ASM)
 
 add_subdirectory(./mcp48x2)
+add_subdirectory(./ringbuffer)
 
 project(pico-lib VERSION 1.0)
