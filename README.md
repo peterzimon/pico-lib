@@ -38,4 +38,4 @@ from this repo as your main project's CMakeLists.txt file (just don't forget to 
 
 
 ## List of libs
-- [mcp48x2](https://github.com/peterzimon/pico-lib/tree/main/mcp48x2): Driver for MCP4802, MCP4812 and MCP4822 DAC's
+- [mcp48x2](https://github.com/peterzimon/pico-lib/tree/main/mcp48x2): Driver for MCP4802, MCP4812 and MCP4822 DAC's — WORK IN PROGREE
