@@ -3,8 +3,8 @@
 Raspberry Pi Pico driver for Microchip MCP4802/MCP4812/MCP4822
 
 The MCP4802/4812/4822 devices are dual 8-bit, 10-bit and 12-bit digital to
-analog converters with SPI interface. This is a driver for these chips on the
-Raspberry Pi Pico. 
+analog converters with SPI interface. This is a Raspberry Pi Pico driver library 
+for these chips.
 
 
 ## Usage
