@@ -1,4 +1,99 @@
 #include "mcp48x2.h"
 
-void MCP48X2::init() { }
-void MCP48X2::testFunc() { }
+/**
+ * Init driver
+ */
+void MCP48X2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_t pin_tx) {
+    // Set default configuration
+    m_spi_port = spi_port;
+    m_pin_cs = pin_cs;
+
+    config(dacA, x2, 1);
+
+    // MCP48X2 max frequecy is 20MHz, let's use 16MHz
+    spi_init(m_spi_port, 16 * 1000 * 1000);
+    gpio_set_function(pin_sck, GPIO_FUNC_SPI);
+    gpio_set_function(pin_tx, GPIO_FUNC_SPI);
+
+
+    // Set chip select high by default
+    gpio_init(m_pin_cs);
+    gpio_set_dir(pin_cs, GPIO_OUT);
+    gpio_put(pin_cs, 1);
+}
+
+/**
+ * Configure and re-configure the DAC anytime during running
+ * 
+ * @param channel Selects channel (dacA | dacB)
+ * @param gain Sets gain (1x | 2x)
+ * @param active Sets chip active (1 | 0)
+ */
+void MCP48X2::config(MCP48X2_Channel channel, MCP48X2_Gain gain, bool active) {
+    m_config = channel << 3 | 0 | gain << 1 | active;
+}
+
+/**
+ * @brief Sets channel to write to
+ * 
+ * @param channel (dacA | dacB)
+ */
+void MCP48X2::set_channel(MCP48X2_Channel channel) {
+    m_config = channel << 3 & m_config;
+}
+
+/**
+ * @brief Sets gain 
+ * 
+ * @param gain (1x | 2x)
+ */
+void MCP48X2::set_gain(MCP48X2_Gain gain) {
+    m_config = gain << 1 & m_config;
+}
+
+/**
+ * @brief Sets active (~shutdown) flag
+ * 
+ * @param active (true | false)
+ */
+void MCP48X2::set_active(bool active) {
+    m_config = active & m_config;
+}
+
+/**
+ * Writes a value to the DAC based on the given config
+ * 
+ * @param value Da 12bit value!
+ */
+void MCP48X2::write(uint16_t value) {
+    uint8_t data[2];
+
+    // Get lo-byte
+    data[0] = value & 0xff;
+
+    // Get hi-byte
+    data[1] = m_config << 4 | (value & 0xf00) >> 8;
+
+    // Transmit the data
+    m_cs_select();
+    spi_write_blocking(m_spi_port, data, 2);
+    m_cs_deselect();
+}
+
+/**
+ * Select chip
+ */
+void MCP48X2::m_cs_select() {
+    asm volatile("nop \n nop \n nop");
+    gpio_put(m_pin_cs, 0);  // Active low
+    asm volatile("nop \n nop \n nop");
+}
+
+/**
+ * Deselect chip
+ */
+void MCP48X2::m_cs_deselect() {
+    asm volatile("nop \n nop \n nop");
+    gpio_put(m_pin_cs, 1);
+    asm volatile("nop \n nop \n nop");
+}
