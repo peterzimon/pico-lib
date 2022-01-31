@@ -15,5 +15,6 @@ enable_language(C CXX ASM)
 
 add_subdirectory(./mcp48x2)
 add_subdirectory(./ringbuffer)
+add_subdirectory(./midi_parser)
 
 project(pico-lib VERSION 1.0)
