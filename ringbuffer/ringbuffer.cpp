@@ -1,8 +1,5 @@
 #include "ringbuffer.h"
 
-ringbuffer::ringbuffer() {}
-ringbuffer::~ringbuffer() {}
-
 /*
  * Initializes the buffer variables.
  * 
@@ -10,7 +7,7 @@ ringbuffer::~ringbuffer() {}
  * bufferSize: size of the buffer
  * no return
  * ------------------------------------------------------------------------- */
-void ringbuffer::init(uint8_t* data_buffer, uint16_t buffer_size) {
+void RingBuffer::init(uint8_t* data_buffer, uint16_t buffer_size) {
     this->m_buffer_size = buffer_size;
     this->m_write_index = 0;
     this->m_read_index = 0;
@@ -26,7 +23,7 @@ void ringbuffer::init(uint8_t* data_buffer, uint16_t buffer_size) {
  * returns: true if write is successful (buffer isn't full), false if the 
  *          buffer is full and write didn't happen 
  * ------------------------------------------------------------------------- */
-bool ringbuffer::write_byte(uint8_t data) {
+bool RingBuffer::write_byte(uint8_t data) {
     if (!is_full()) {
         this->m_data_buffer[m_write_index] = data;          // Write data to current index
         m_write_index = (m_write_index + 1) % m_buffer_size;  // Increase write index
@@ -43,7 +40,7 @@ bool ringbuffer::write_byte(uint8_t data) {
  * returns: true if the buffer is not empty (ie. not all data has been read),
  *          false if the all the data from the buffer has been read already
  * ------------------------------------------------------------------------- */
-bool ringbuffer::read_byte(uint8_t& data) {
+bool RingBuffer::read_byte(uint8_t& data) {
     if (!is_empty()) {
         data = this->m_data_buffer[m_read_index];
         m_read_index = (m_read_index + 1) % m_buffer_size;
@@ -60,7 +57,7 @@ bool ringbuffer::read_byte(uint8_t& data) {
  * returns: true if the buffer is not empty (ie. not all data has been read),
  *          false if the all the data from the buffer has been read already
  * ------------------------------------------------------------------------- */
-bool ringbuffer::peek(uint8_t& data) {
+bool RingBuffer::peek(uint8_t& data) {
     if (!is_empty()) {
         data = this->m_data_buffer[m_read_index];
         return true;
@@ -73,7 +70,7 @@ bool ringbuffer::peek(uint8_t& data) {
  * 
  * returns: true if the buffer is full, false if not
  * ------------------------------------------------------------------------- */
-bool ringbuffer::is_full() {
+bool RingBuffer::is_full() {
     return m_count == m_buffer_size;
 }
 
@@ -82,6 +79,6 @@ bool ringbuffer::is_full() {
  * 
  * returns: true if the buffer is empty, false if not
  * ------------------------------------------------------------------------- */
-bool ringbuffer::is_empty() {
+bool RingBuffer::is_empty() {
     return m_count == 0;
 }

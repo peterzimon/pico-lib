@@ -3,12 +3,12 @@
 /**
  * Init driver
  */
-void mcp48x2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_t pin_tx) {
+void MCP48X2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_t pin_tx) {
     // Set default configuration
     m_spi_port = spi_port;
     m_pin_cs = pin_cs;
 
-    config(dacA, x2, 1);
+    config(MCP48X2_CHANNEL_A, MCP48X2_GAIN_X2, 1);
 
     // Let's use 1MHz
     spi_init(m_spi_port, 1000 * 1000);
@@ -28,7 +28,7 @@ void mcp48x2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_
  * @param gain Sets gain (1x | 2x)
  * @param active Sets chip active (1 | 0)
  */
-void mcp48x2::config(mcp48x2_channel channel, mcp48x2_gain gain, bool active) {
+void MCP48X2::config(mcp48x2_channel channel, mcp48x2_gain gain, bool active) {
     m_config = channel << 3 | 0 << 2 | gain << 1 | active;
 }
 
@@ -37,7 +37,7 @@ void mcp48x2::config(mcp48x2_channel channel, mcp48x2_gain gain, bool active) {
  * 
  * @param channel (dacA | dacB)
  */
-void mcp48x2::set_channel(mcp48x2_channel channel) {
+void MCP48X2::set_channel(mcp48x2_channel channel) {
     m_config = channel << 3 & m_config;
 }
 
@@ -46,7 +46,7 @@ void mcp48x2::set_channel(mcp48x2_channel channel) {
  * 
  * @param gain (1x | 2x)
  */
-void mcp48x2::set_gain(mcp48x2_gain gain) {
+void MCP48X2::set_gain(mcp48x2_gain gain) {
     m_config = gain << 1 & m_config;
 }
 
@@ -55,7 +55,7 @@ void mcp48x2::set_gain(mcp48x2_gain gain) {
  * 
  * @param active (true | false)
  */
-void mcp48x2::set_active(bool active) {
+void MCP48X2::set_active(bool active) {
     m_config = active & m_config;
 }
 
@@ -64,7 +64,7 @@ void mcp48x2::set_active(bool active) {
  * 
  * @param value Da 12bit value!
  */
-void mcp48x2::write(uint16_t value) {
+void MCP48X2::write(uint16_t value) {
     uint8_t data[2];
 
     // Get hi-byte
@@ -82,7 +82,7 @@ void mcp48x2::write(uint16_t value) {
 /**
  * Select chip
  */
-void mcp48x2::m_cs_select() {
+void MCP48X2::m_cs_select() {
     asm volatile("nop \n nop \n nop");
     gpio_put(m_pin_cs, 0);  // Active low
     asm volatile("nop \n nop \n nop");
@@ -91,7 +91,7 @@ void mcp48x2::m_cs_select() {
 /**
  * Deselect chip
  */
-void mcp48x2::m_cs_deselect() {
+void MCP48X2::m_cs_deselect() {
     asm volatile("nop \n nop \n nop");
     gpio_put(m_pin_cs, 1);
     asm volatile("nop \n nop \n nop");

@@ -26,7 +26,7 @@
 
 #include <pico/stdlib.h>
 
-class midi_parser {
+class MidiParser {
 
     public:
         void parse_byte(uint8_t byte);

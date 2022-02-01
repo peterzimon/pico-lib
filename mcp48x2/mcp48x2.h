@@ -19,10 +19,10 @@
 #include <pico/stdlib.h>
 #include <hardware/spi.h>
 
-enum mcp48x2_channel { dacA, dacB };
-enum mcp48x2_gain { x2, x1 };
+enum mcp48x2_channel { MCP48X2_CHANNEL_A, MCP48X2_CHANNEL_B };
+enum mcp48x2_gain { MCP48X2_GAIN_X2, MCP48X2_GAIN_X1 };
 
-class mcp48x2 {
+class MCP48X2 {
 public:
     void init(spi_inst_t *spi, uint8_t pin_cs, uint8_t pin_sck, uint8_t pin_tx);
     void config(mcp48x2_channel channel, mcp48x2_gain gain, bool active);

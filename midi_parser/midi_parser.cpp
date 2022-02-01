@@ -4,7 +4,7 @@
  * Parses incoming and constructs a midi message. As soon as the message is
  * complete, it calls m_send_message()
  */
-void midi_parser::parse_byte(uint8_t byte) {
+void MidiParser::parse_byte(uint8_t byte) {
 
     // Received status message
     if (byte >= 0x80) {
@@ -57,7 +57,7 @@ void midi_parser::parse_byte(uint8_t byte) {
  * Calls the appropriate message method based on statuses. The methods are supposed
  * to be implemented in a child class of this class.
  * */
-void midi_parser::m_send_message() {
+void MidiParser::m_send_message() {
 
     uint8_t hi = m_running_status & 0xf0;
     uint8_t lo = m_running_status & 0x0f;     // Lower part of the byte contains channel 
