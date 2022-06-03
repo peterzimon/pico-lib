@@ -1,13 +1,17 @@
 /**
  * MidiParser
+ * 
+ * @author Peter Zimon (peter.zimon@gmail.com)
+ * @copyright Copyright (c) 2022
+ * 
  * Parses incoming bytes to midi messages. If a MIDI message is constructed
  * (complete) then it calls the corresponding method which can be implemented
  * by an inherited class.
  * 
  * How to use?
- * 1. Create a class that handles midi messages (e.g. MidiHandler) and make this
- *    class its parent, e.g. class MidiHandler: public MidiParser { }
- * 2. Call the parseByte function in a loop to parse bytes coming from UART/USB
+ * 1. Create an instance of the MidiParser class that will handle midi messages
+ *    e.g. class MidiHandler: public MidiParser { }
+ * 2. Call the parse_byte function in a loop to parse bytes coming from UART/USB
  * 3. Implement midi message methods (e.g. noteOn, noteOff etc.) in MidiHandler
  * */
 
