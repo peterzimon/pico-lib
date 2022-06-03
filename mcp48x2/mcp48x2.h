@@ -1,6 +1,6 @@
 /**
  * @file mcp48x2.h
- * @author Zimo (peterzimon.com)
+ * @author Peter Zimon (peterzimon.com)
  * @brief  
  * 
  * Raspberry Pi Pico driver for Microchip MCP4802/MCP4812/MCP4822

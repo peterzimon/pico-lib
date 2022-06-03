@@ -4,10 +4,10 @@
  * Init driver
  */
 void MCP48X2::init(spi_inst_t *spi_port, uint8_t pin_cs, uint8_t pin_sck, uint8_t pin_tx) {
-    // Set default configuration
     m_spi_port = spi_port;
     m_pin_cs = pin_cs;
-
+    
+    // Set default configuration: channel A, 2x gain, activate chip
     config(MCP48X2_CHANNEL_A, MCP48X2_GAIN_X2, 1);
 
     // Let's use 1MHz

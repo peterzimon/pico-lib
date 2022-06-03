@@ -58,7 +58,7 @@ then you can use the config or the set_channel, set_gain or set_active methods.
 E.g.:
 
 ```
-dac.set_channel(dacB);
+dac.set_channel(MCP48X2_CHANNEL_B);
 ```
 
 ## Resources
