@@ -53,6 +53,10 @@ void MidiParser::parse_byte(uint8_t byte) {
     }
 }
 
+uint8_t MidiParser::channel() {
+    return m_midi_channel;
+}
+
 /**
  * Calls the appropriate message method based on statuses. The methods are supposed
  * to be implemented in a child class of this class.
@@ -62,6 +66,8 @@ void MidiParser::m_send_message() {
     uint8_t hi = m_running_status & 0xf0;
     uint8_t lo = m_running_status & 0x0f;     // Lower part of the byte contains channel 
                                             // information for most regular MIDI messages
+
+    m_midi_channel = lo;
 
     switch (hi)
     {

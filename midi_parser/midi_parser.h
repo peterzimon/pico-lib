@@ -34,6 +34,7 @@ class MidiParser {
 
     public:
         void parse_byte(uint8_t byte);
+        uint8_t channel();
 
         // MIDI messages must be implemented in handler (child) class
         virtual void note_off(uint8_t channel, uint8_t note, uint8_t velocity) { }
@@ -51,6 +52,8 @@ class MidiParser {
         uint8_t m_data[3];
         uint8_t m_received_data_bytes;
         uint8_t m_expected_data_size;
+
+        uint8_t m_midi_channel;
 };
 
 #endif
