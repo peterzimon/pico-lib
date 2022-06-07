@@ -67,15 +67,15 @@ void MidiParser::m_send_message() {
     uint8_t lo = m_running_status & 0x0f;     // Lower part of the byte contains channel 
                                             // information for most regular MIDI messages
 
-    m_midi_channel = lo;
-
     switch (hi)
     {
     case NOTE_OFF:
+        m_midi_channel = lo;
         note_off(lo, m_data[0], m_data[1]);
         break;
 
     case NOTE_ON:
+        m_midi_channel = lo;
         if (m_data[1]) {
             note_on(lo, m_data[0], m_data[1]);
         } else {
