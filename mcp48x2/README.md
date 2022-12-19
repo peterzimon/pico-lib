@@ -46,6 +46,8 @@ MCP48x2 dac;
 dac.init(spi0, 7, 4, 5);
 ```
 
+where the parameters are: spi port, CS, SCK, SDI (or TX) respectively.
+
 4. Write value to the DAC. If you use the default config then 12bits pretty much 
 match the output voltage in mV.
 
