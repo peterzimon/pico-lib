@@ -22,7 +22,7 @@ this driver:
 |-------------------------------------------------------|
 | Pico        | Pico GP#    | MCP48x2     | MCP48x2 pin |
 |-------------|-------------|-------------|-------------|
-| SCK         | 2 (pin 4)   | SCK         | 3           |
+| SCK         | 2 (pin 4)   | SCK         | 7           |
 | TX          | 3 (pin 5)   | SDI         | 4           |
 | RX          | 4 (pin 6)   | N/A         | -           |
 | Csn         | any GPIO    | ~CS         | 2           |
@@ -58,7 +58,7 @@ then you can use the config or the set_channel, set_gain or set_active methods.
 E.g.:
 
 ```
-dac.set_channel(MCP48X2_CHANNEL_B);
+dac.set_channel(MCP48X2_CHANNEL_B); // Note untested
 ```
 
 ## Resources
