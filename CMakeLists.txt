@@ -17,5 +17,6 @@ add_subdirectory(./mcp48x2)
 add_subdirectory(./ringbuffer)
 add_subdirectory(./midi_parser)
 add_subdirectory(./utils)
+add_subdirectory(./ui_components)
 
 project(pico-lib VERSION 1.0)
