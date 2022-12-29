@@ -31,3 +31,18 @@ bool Button::is_pressed() {
 
     return pressed_;
 }
+
+bool Button::is_released() {
+    released_ = false;
+    bool btn_read = !gpio_get(pin_);
+
+    if (btn_read) {
+        previous_debounce_ms_ = get_now_();
+    } else {
+        if (get_now_() - previous_debounce_ms_ > debounce_time_) {
+            released_ = true;
+        }
+    }
+
+    return released_;
+}

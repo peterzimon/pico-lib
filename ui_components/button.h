@@ -13,6 +13,7 @@ private:
     uint32_t previous_debounce_ms_;
     uint32_t debounce_time_;
     bool pressed_ = false;
+    bool released_ = false;
 
     uint32_t get_now_();
 
@@ -22,6 +23,7 @@ public:
 
     void init_gpio();
     bool is_pressed();
+    bool is_released();
 };
 
 #endif
