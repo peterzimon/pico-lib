@@ -38,9 +38,11 @@ bool Button::is_released() {
 
     if (btn_read) {
         previous_debounce_ms_ = get_now_();
+        pressed_ = true;
     } else {
-        if (get_now_() - previous_debounce_ms_ > debounce_time_) {
+        if ((get_now_() - previous_debounce_ms_ > debounce_time_) && pressed_) {
             released_ = true;
+            pressed_ = false;
         }
     }
 
