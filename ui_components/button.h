@@ -1,3 +1,8 @@
+/**
+ * Simple button class with debouncing. It can be used to check if the button
+ * was pressed or released.
+*/
+
 #ifndef _PICO_LIB_BUTTON_H
 #define _PICO_LIB_BUTTON_H
 
