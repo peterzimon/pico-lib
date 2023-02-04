@@ -1,6 +1,13 @@
 #ifndef _PICO_LIB_UTILS_H
 #define _PICO_LIB_UTILS_H
 
+#define DISALLOW_COPY_AND_ASSIGN(TypeName)          \
+    TypeName(const TypeName&) = delete;             \
+    TypeName(TypeName&&) = delete;                  \
+    TypeName& operator=(const TypeName&) = delete;  \
+    TypeName& operator=(TypeName&&) = delete;
+
+
 #include <inttypes.h>
 #include <pico/stdlib.h>
 
