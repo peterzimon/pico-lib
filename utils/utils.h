@@ -62,6 +62,10 @@ class Utils
             return to_ms_since_boot(get_absolute_time());
         }
 
+        static inline uint64_t micros() {
+            return to_us_since_boot(get_absolute_time());
+        }
+
         // Convert interrupt event to string
         // declare this var and use for buf 
         // static char event_str[128];
