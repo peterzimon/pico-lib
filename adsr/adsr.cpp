@@ -6,10 +6,10 @@ ADSR::ADSR(int l_vertical_resolution)
     // Initialise
     _vertical_resolution = l_vertical_resolution;
 
-    _attack = DEFAULT_ADR_MS;
-    _decay = DEFAULT_ADR_MS;
+    _attack = DEFAULT_ADR_uS;
+    _decay = DEFAULT_ADR_uS;
     _sustain = l_vertical_resolution * DEFAULT_SUSTAIN_LEVEL;                   
-    _release = DEFAULT_ADR_MS;
+    _release = DEFAULT_ADR_uS;
 
     // Create look-up table for Attack
     for (int i = 0; i < LUT_SIZE; i++) {
@@ -89,10 +89,14 @@ void ADSR::note_on() {
 void ADSR::note_off() {
     _notes_pressed--;
     if (_notes_pressed <= 0) {                      // if all notes are depressed - start release
-        _t_note_off = _micros();              // set timestamp for note off
+        _t_note_off = _micros();                    // set timestamp for note off
         _release_start = _adsr_output;              // set start value for release
         _notes_pressed = 0;
     }
+}
+
+bool ADSR::is_on() {
+    return _notes_pressed >= 1;
 }
 
 int ADSR::envelope()
