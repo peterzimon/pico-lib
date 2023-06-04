@@ -37,8 +37,8 @@
 // Definitions
 #define LUT_SIZE 1024                               // Number of time samples for the lookup tables. It's
                                                     // essentially the resolution of the ADSR
-#define ATTACK_ALPHA 0.995                          // Varies between 0.9 (steep curve) and 0.9995 (straight line)
-#define ATTACK_DECAY_RELEASE 0.997                  // Fits to ARRAY_SIZE 1024
+#define DEFAULT_ATTACK_ALPHA 0.995                  // Varies between 0.9 (steep curve) and 0.9995 (straight line)
+#define DEFAULT_DECAY_RELEASE 0.972                  // Fits to ARRAY_SIZE 1024
 #define DEFAULT_ADR_uS 300000                       // Default Attack, Decay and Release in us
 #define DEFAULT_SUSTAIN_LEVEL 0.5                   // Relative to max sustain
 
@@ -48,7 +48,12 @@ class ADSR {
 public:
     
     // Constructor
-    ADSR(int dacSize);                          // Max value of the DAC = 2^resolution. E.g. for a 12bit DAC -> 4096
+    // Max value of the DAC = 2^resolution. E.g. for a 12bit DAC -> 4096
+    ADSR(
+        int dac_size, 
+        float attack_alpha = DEFAULT_ATTACK_ALPHA, 
+        float attack_decay_release = DEFAULT_DECAY_RELEASE
+    );
 
     // ADSR value setters
     void set_attack(unsigned long l_attack);     // 0 to 20 sec in us
@@ -72,6 +77,9 @@ public:
 private:
     int _attack_table[LUT_SIZE];
     int _decay_release_table[LUT_SIZE];
+
+    float _attach_alpha;
+    float _attack_decay_release;
 
     int _vertical_resolution;                   // number of bits for output, control, etc
     uint64_t _attack = 0;                  

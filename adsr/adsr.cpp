@@ -1,10 +1,17 @@
 #include "adsr.h"
 #include <math.h>
 
-ADSR::ADSR(int l_vertical_resolution)
+ADSR::ADSR(
+    int l_vertical_resolution, 
+    float attack_alpha,
+    float attack_decay_release
+)
 {
     // Initialise
     _vertical_resolution = l_vertical_resolution;
+
+    _attach_alpha = attack_alpha;
+    _attack_decay_release = attack_decay_release;
 
     _attack = DEFAULT_ADR_uS;
     _decay = DEFAULT_ADR_uS;
@@ -19,8 +26,8 @@ ADSR::ADSR(int l_vertical_resolution)
 
       // Create look-up table for Decay and Release
     for (int i = 0; i < LUT_SIZE - 1; i++) {
-        _attack_table[i+1] = (1.0 - ATTACK_ALPHA) * (_vertical_resolution - 1) + ATTACK_ALPHA * _attack_table[i];
-        _decay_release_table[i+1] = ATTACK_DECAY_RELEASE * _decay_release_table[i];
+        _attack_table[i+1] = (1.0 - _attach_alpha) * (_vertical_resolution - 1) + _attach_alpha * _attack_table[i];
+        _decay_release_table[i+1] = _attack_decay_release * _decay_release_table[i];
     }
 
     // Normalize tables to min and max
