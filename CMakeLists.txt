@@ -18,6 +18,11 @@ add_subdirectory(./adsr)
 add_subdirectory(./mcp48x2)
 add_subdirectory(./ringbuffer)
 add_subdirectory(./midi_parser)
+<<<<<<< Updated upstream
 add_subdirectory(./ui_components)
+=======
+add_subdirectory(./utils)
+add_subdirectory(./midi)
+>>>>>>> Stashed changes
 
 project(pico-lib VERSION 1.0)
